@@ -1,27 +1,36 @@
 package com.ebay.dozhao.myweatherapp
 
 import android.content.Intent
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.os.SystemClock
+import android.support.v7.app.AppCompatActivity
+import android.util.Log
+import org.greenrobot.eventbus.EventBus
+import org.greenrobot.eventbus.Subscribe
+import org.greenrobot.eventbus.ThreadMode
 
 class SplashScreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-
-
+        EventBus.getDefault().register(this)
     }
 
     override fun onResume() {
         super.onResume()
-        nextActivity()
+        RecentSearchRepository.getRecentSearches()
+        Log.d("dozhao", "onResume continures")
     }
 
-    private fun nextActivity() {
+    override fun onStop() {
+        super.onStop()
+        EventBus.getDefault().unregister(this)
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    fun onGetRecentSearchDoneEvent(event: GetRecentSearchDoneEvent) {
         //if there is a recent search, show detail weather page
-        SystemClock.sleep(3000)
+
         //else show search page
         val intent = Intent(this, SearchActivity::class.java)
         startActivity(intent)
