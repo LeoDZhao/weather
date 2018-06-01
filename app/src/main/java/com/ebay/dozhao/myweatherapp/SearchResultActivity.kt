@@ -9,7 +9,10 @@ import kotlinx.android.synthetic.main.activity_search_result.*
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.Executors
+
 
 class SearchResultActivity : AppCompatActivity() {
 
@@ -34,9 +37,29 @@ class SearchResultActivity : AppCompatActivity() {
         val executor = Executors.newSingleThreadExecutor()
         executor.execute {
             //do search
-            Thread.sleep(2000)
+            val retrofit = Retrofit.Builder()
+                    .baseUrl("http://api.openweathermap.org/")
+                    .addConverterFactory(GsonConverterFactory.create())
+                    .build()
+            val weatherService = retrofit.create(WeatherService::class.java)
+            val response = weatherService.currentWeatherByCitiyName(query).execute()
+
             val event = SearchDoneEvent()
-            event.query = query
+            if (response.isSuccessful) {
+                val body = response.body()
+                body?.let {
+                    event.query = body.id.toString() + "\n" +
+                            (body.name) + "\n" +
+                            body.cod + "\n" +
+                            body.coord.lon + ", " + body.coord.lat + "\n" +
+                            body.weatherList.size + "\n" +
+                            "${body.weatherList[0].id}, ${body.weatherList[0].main}, ${body.weatherList[0].description}, ${body.weatherList[0].icon}"
+                }
+
+            } else {
+                event.query = "Error: " + response.code().toString() + "\n" + response.message()
+            }
+
             EventBus.getDefault().post(event)
         }
     }
