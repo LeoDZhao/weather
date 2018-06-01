@@ -10,7 +10,7 @@ import java.util.concurrent.Executors
 
 class SearchResultActivity : AppCompatActivity() {
 
-    var presenter: SearchResultPresenter? = null
+    private var presenter: SearchResultPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

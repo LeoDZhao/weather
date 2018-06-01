@@ -7,262 +7,273 @@
     android:layout_height="match_parent"
     tools:context=".SearchResultActivity">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="28dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="16dp"
-        android:text="@string/default_text"
-        android:textAppearance="@android:style/TextAppearance.Material.Large"
+
+    <android.support.constraint.ConstraintLayout
+        android:id="@+id/constraintLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/icon"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="28dp"
-        android:contentDescription="weatherIcon"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/title"
-        app:srcCompat="@drawable/splash_screen_image" />
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="28dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/default_text"
+            android:textAppearance="@android:style/TextAppearance.Material.Large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/temperature"
-        android:layout_width="0dp"
-        android:layout_height="100dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="52dp"
-        android:layout_marginTop="28dp"
-        android:text="@string/default_text"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/icon"
-        app:layout_constraintTop_toBottomOf="@+id/title" />
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="28dp"
+            android:contentDescription="weatherIcon"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/title"
+            app:srcCompat="@drawable/splash_screen_image" />
 
-
-    <TextView
-        android:id="@+id/mainWeather"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="28dp"
-        android:text="@string/default_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/icon" />
-
-    <TextView
-        android:id="@+id/date"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="14dp"
-        android:text="@string/default_text"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainWeather" />
-
-    <View
-        android:id="@+id/divider"
-        android:layout_width="395dp"
-        android:layout_height="1dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="14dp"
-        android:background="?android:attr/listDivider"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/date" />
+        <TextView
+            android:id="@+id/temperature"
+            android:layout_width="0dp"
+            android:layout_height="100dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="52dp"
+            android:layout_marginTop="28dp"
+            android:text="@string/default_text"
+            android:textAppearance="@style/TextAppearance.AppCompat.Large"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toEndOf="@+id/icon"
+            app:layout_constraintTop_toBottomOf="@+id/title" />
 
 
-    <TextView
-        android:id="@+id/wind"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="18dp"
-        android:text="@string/default_text"
-        app:layout_constraintEnd_toStartOf="@+id/windDetail"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/divider"
-        tools:text="Geo coords" />
+        <TextView
+            android:id="@+id/mainWeather"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="28dp"
+            android:text="@string/default_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/icon" />
 
-    <TextView
-        android:id="@+id/windDetail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="28dp"
-        android:text="@string/default_text"
-        app:layout_constraintBaseline_toBaselineOf="@+id/wind"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/wind"
-        tools:text="a very long name a very long name a very long name a very long name" />
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="14dp"
+            android:text="@string/default_text"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/mainWeather" />
 
-    <TextView
-        android:id="@+id/cloudiness"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="18dp"
-        android:text="@string/default_text"
-        app:layout_constraintEnd_toStartOf="@+id/cloudinessDetail"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/windDetail" />
+        <View
+            android:id="@+id/divider"
+            android:layout_width="395dp"
+            android:layout_height="1dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="14dp"
+            android:background="?android:attr/listDivider"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/date" />
 
-    <TextView
-        android:id="@+id/cloudinessDetail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="28dp"
-        android:text="@string/default_text"
-        app:layout_constraintBaseline_toBaselineOf="@+id/cloudiness"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/cloudiness"
-        tools:text="a very long name a very long name a very long name a very long name" />
 
-    <TextView
-        android:id="@+id/pressure"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="18dp"
-        android:text="@string/default_text"
-        app:layout_constraintEnd_toStartOf="@+id/pressureDetail"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cloudinessDetail" />
+        <TextView
+            android:id="@+id/wind"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="18dp"
+            android:text="@string/default_text"
+            app:layout_constraintEnd_toStartOf="@+id/windDetail"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/divider"
+            tools:text="Geo coords" />
 
-    <TextView
-        android:id="@+id/pressureDetail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="28dp"
-        android:text="@string/default_text"
-        app:layout_constraintBaseline_toBaselineOf="@+id/pressure"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/pressure"
-        tools:text="a very long name a very long name a very long name a very long name" />
+        <TextView
+            android:id="@+id/windDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="28dp"
+            android:text="@string/default_text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/wind"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/wind"
+            tools:text="a very long name a very long name a very long name a very long name" />
 
-    <TextView
-        android:id="@+id/humidity"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="18dp"
-        android:text="@string/default_text"
-        app:layout_constraintEnd_toStartOf="@+id/humidityDetail"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/pressureDetail" />
+        <TextView
+            android:id="@+id/cloudiness"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="18dp"
+            android:text="@string/default_text"
+            app:layout_constraintEnd_toStartOf="@+id/cloudinessDetail"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/windDetail" />
 
-    <TextView
-        android:id="@+id/humidityDetail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="28dp"
-        android:text="@string/default_text"
-        app:layout_constraintBaseline_toBaselineOf="@+id/humidity"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/humidity"
-        tools:text="a very long name a very long name a very long name a very long name a very long name a very long name a very long name a very long name" />
+        <TextView
+            android:id="@+id/cloudinessDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="28dp"
+            android:text="@string/default_text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/cloudiness"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/cloudiness"
+            tools:text="a very long name a very long name a very long name a very long name" />
 
-    <TextView
-        android:id="@+id/sunrise"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="18dp"
-        android:text="@string/default_text"
-        app:layout_constraintEnd_toStartOf="@+id/sunriseDetail"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/humidityDetail" />
+        <TextView
+            android:id="@+id/pressure"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="18dp"
+            android:text="@string/default_text"
+            app:layout_constraintEnd_toStartOf="@+id/pressureDetail"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cloudinessDetail" />
 
-    <TextView
-        android:id="@+id/sunriseDetail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="28dp"
-        android:text="@string/default_text"
-        app:layout_constraintBaseline_toBaselineOf="@+id/sunrise"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/sunrise"
-        tools:text="a very long name a very long name a very long name a very long name" />
+        <TextView
+            android:id="@+id/pressureDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="28dp"
+            android:text="@string/default_text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/pressure"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/pressure"
+            tools:text="a very long name a very long name a very long name a very long name" />
 
-    <TextView
-        android:id="@+id/sunset"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="18dp"
-        android:text="@string/default_text"
-        app:layout_constraintEnd_toStartOf="@+id/sunsetDetail"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sunriseDetail" />
+        <TextView
+            android:id="@+id/humidity"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="18dp"
+            android:text="@string/default_text"
+            app:layout_constraintEnd_toStartOf="@+id/humidityDetail"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/pressureDetail" />
 
-    <TextView
-        android:id="@+id/sunsetDetail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="28dp"
-        android:text="@string/default_text"
-        app:layout_constraintBaseline_toBaselineOf="@+id/sunset"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/sunset"
-        tools:text="a very long name a very long name a very long name a very long name" />
+        <TextView
+            android:id="@+id/humidityDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="28dp"
+            android:text="@string/default_text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/humidity"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/humidity"
+            tools:text="a very long name a very long name a very long name a very long name a very long name a very long name a very long name a very long name" />
 
-    <TextView
-        android:id="@+id/coords"
-        android:layout_width="80dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="18dp"
-        android:text="@string/default_text"
-        app:layout_constraintEnd_toStartOf="@+id/coordsDetail"
-        app:layout_constraintHorizontal_chainStyle="spread_inside"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/sunsetDetail" />
+        <TextView
+            android:id="@+id/sunrise"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="18dp"
+            android:text="@string/default_text"
+            app:layout_constraintEnd_toStartOf="@+id/sunriseDetail"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/humidityDetail" />
 
-    <TextView
-        android:id="@+id/coordsDetail"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginStart="28dp"
-        android:text="@string/default_text"
-        app:layout_constraintBaseline_toBaselineOf="@+id/coords"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/coords"
-        tools:text="a very long name a very long name a very long name a very long name" />
+        <TextView
+            android:id="@+id/sunriseDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="28dp"
+            android:text="@string/default_text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/sunrise"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/sunrise"
+            tools:text="a very long name a very long name a very long name a very long name" />
 
+        <TextView
+            android:id="@+id/sunset"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="18dp"
+            android:text="@string/default_text"
+            app:layout_constraintEnd_toStartOf="@+id/sunsetDetail"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sunriseDetail" />
+
+        <TextView
+            android:id="@+id/sunsetDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="28dp"
+            android:text="@string/default_text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/sunset"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/sunset"
+            tools:text="a very long name a very long name a very long name a very long name" />
+
+        <TextView
+            android:id="@+id/coords"
+            android:layout_width="80dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="28dp"
+            android:layout_marginTop="18dp"
+            android:text="@string/default_text"
+            app:layout_constraintEnd_toStartOf="@+id/coordsDetail"
+            app:layout_constraintHorizontal_chainStyle="spread_inside"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/sunsetDetail" />
+
+        <TextView
+            android:id="@+id/coordsDetail"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="16dp"
+            android:layout_marginStart="28dp"
+            android:text="@string/default_text"
+            app:layout_constraintBaseline_toBaselineOf="@+id/coords"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/coords"
+            tools:text="a very long name a very long name a very long name a very long name" />
+
+    </android.support.constraint.ConstraintLayout>
 
     <ProgressBar
         android:id="@+id/progressBar"
         style="?android:attr/progressBarStyle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="54dp"
-        android:layout_marginEnd="181dp"
-        android:layout_marginStart="181dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        tools:layout_editor_absoluteX="182dp"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

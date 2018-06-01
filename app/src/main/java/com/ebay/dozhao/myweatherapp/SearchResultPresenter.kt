@@ -9,7 +9,7 @@ import org.greenrobot.eventbus.ThreadMode
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SearchResultPresenter(val activity: SearchResultActivity) {
+class SearchResultPresenter(private val activity: SearchResultActivity) {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchDoneEvent(event: SearchDoneEvent) {
@@ -40,6 +40,9 @@ class SearchResultPresenter(val activity: SearchResultActivity) {
             val dateTextView: TextView = activity.findViewById(R.id.date)
             dateTextView.text = currentDateandTime
 
+
+            val layout = activity.findViewById<View>(R.id.constraintLayout)
+            layout.visibility = View.VISIBLE
         }
 
     }
