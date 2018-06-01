@@ -10,4 +10,7 @@ class RawCurrentWeather {
 
     @SerializedName("weather")
     var weatherList: List<RawWeather> = ArrayList()
+
+    @SerializedName(value = "main")
+    var mainAttribute: RawMainAttribute = RawMainAttribute()
 }
