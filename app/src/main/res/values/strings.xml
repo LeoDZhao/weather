@@ -2,4 +2,11 @@
     <string name="app_name">My Aussie Weather</string>
     <string name="search_hint">Enter city name or zip code</string>
     <string name="default_text">default</string>
+    <string name="wind">Wind</string>
+    <string name="cloudiness">Cloudiness</string>
+    <string name="pressure">Pressure</string>
+    <string name="humidity">Humidity</string>
+    <string name="sunrise">Sunrise</string>
+    <string name="sunset">Sunset</string>
+    <string name="coords">Geo coords</string>
 </resources>

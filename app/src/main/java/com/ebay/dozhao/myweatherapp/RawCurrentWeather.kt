@@ -13,4 +13,8 @@ class RawCurrentWeather {
 
     @SerializedName(value = "main")
     var mainAttribute: RawMainAttribute = RawMainAttribute()
+
+    var wind: RawWind = RawWind()
+    var clouds: RawClouds = RawClouds()
+    var sys: RawSys = RawSys()
 }

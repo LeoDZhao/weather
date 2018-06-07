@@ -32,14 +32,38 @@ class SearchResultPresenter(private val activity: SearchResultActivity) {
                 mainWeatherTextView.text = it.main
             }
 
+
             val temperatureTextView: TextView = activity.findViewById(R.id.temperature)
             temperatureTextView.text = it.mainAttribute.temp.toString()
 
-            val sdf = SimpleDateFormat("yyyy/MM/dd")
-            val currentDateandTime = sdf.format(Date())
+            val simpleDateFormatDayLevel = SimpleDateFormat("yyyy/MM/dd", Locale.CANADA)
+            val currentDateandTime = simpleDateFormatDayLevel.format(Date())
             val dateTextView: TextView = activity.findViewById(R.id.date)
             dateTextView.text = currentDateandTime
 
+            val windDetailTextView: TextView = activity.findViewById(R.id.windDetail)
+            windDetailTextView.text = it.wind.speed.toString()
+
+            val cloudsDetailTextView: TextView = activity.findViewById(R.id.cloudinessDetail)
+            cloudsDetailTextView.text = it.clouds.all.toString()
+
+            val pressureDetailTextView: TextView = activity.findViewById(R.id.pressureDetail)
+            pressureDetailTextView.text = it.mainAttribute.pressure.toString()
+
+            val humidityTextView: TextView = activity.findViewById(R.id.humidityDetail)
+            humidityTextView.text = it.mainAttribute.humidity.toString()
+
+            val sunriseDate = Date(it.sys.sunrise)
+            val sunriseTextView: TextView = activity.findViewById(R.id.sunriseDetail)
+            sunriseTextView.text = sunriseDate.toString()
+
+            val sunsetDate = Date(it.sys.sunset)
+            val sunsetTextView: TextView = activity.findViewById(R.id.sunsetDetail)
+            sunsetTextView.text = sunsetDate.toString()
+
+            val geoCoordTextView: TextView = activity.findViewById(R.id.coordsDetail)
+            val coords = "lat: ${it.coord.lat}, lon: ${it.coord.lon}"
+            geoCoordTextView.text = coords
 
             val layout = activity.findViewById<View>(R.id.constraintLayout)
             layout.visibility = View.VISIBLE
