@@ -3,6 +3,7 @@ package com.ebay.dozhao.myweatherapp
 import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
+import android.support.v4.app.NavUtils
 import android.support.v7.app.AppCompatActivity
 import org.greenrobot.eventbus.EventBus
 import java.util.concurrent.Executors
@@ -18,7 +19,6 @@ class SearchResultActivity : AppCompatActivity() {
         presenter = SearchResultPresenter(this)
         EventBus.getDefault().register(presenter)
 
-
         if (Intent.ACTION_SEARCH == intent.action) {
             val query = intent.getStringExtra(SearchManager.QUERY)
             val executor = Executors.newSingleThreadExecutor()
@@ -31,5 +31,13 @@ class SearchResultActivity : AppCompatActivity() {
     override fun onStop() {
         super.onStop()
         EventBus.getDefault().unregister(presenter)
+    }
+
+    override fun onBackPressed() {
+        super.onBackPressed()
+        val intent = NavUtils.getParentActivityIntent(this)
+        intent?.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP
+        startActivity(intent)
+        finish()
     }
 }

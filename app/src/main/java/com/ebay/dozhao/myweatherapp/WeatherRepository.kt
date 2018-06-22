@@ -24,7 +24,7 @@ object WeatherRepository {
             body?.let {
                 currentWeather = it
             }
-
+            RecentSearchRepository.saveRecentSearch(query)
         } else {
             event.message = "Error: " + response.code().toString() + "\n" + response.message()
         }

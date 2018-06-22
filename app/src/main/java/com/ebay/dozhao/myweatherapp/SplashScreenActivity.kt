@@ -1,5 +1,6 @@
 package com.ebay.dozhao.myweatherapp
 
+import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -18,7 +19,7 @@ class SplashScreenActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        RecentSearchRepository.getRecentSearches()
+        RecentSearchRepository.updateRecentSearches()
         Log.d("dozhao", "onResume continures")
     }
 
@@ -28,11 +29,15 @@ class SplashScreenActivity : AppCompatActivity() {
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onGetRecentSearchDoneEvent(event: GetRecentSearchDoneEvent) {
-        //if there is a recent search, show detail weather page
-
-        //else show search page
-        val intent = Intent(this, SearchActivity::class.java)
-        startActivity(intent)
+    fun onUpdateRecentSearchDoneEvent(event: UpdateRecentSearchDoneEvent) {
+        if (RecentSearchRepository.recentSearches.isNotEmpty()) {
+            val intent = Intent(this, SearchResultActivity::class.java)
+            intent.action = Intent.ACTION_SEARCH
+            intent.putExtra(SearchManager.QUERY, RecentSearchRepository.recentSearches[0])
+            startActivity(intent)
+        } else {
+            val intent = Intent(this, SearchActivity::class.java)
+            startActivity(intent)
+        }
     }
 }
