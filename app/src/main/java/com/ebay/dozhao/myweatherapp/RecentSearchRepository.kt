@@ -1,6 +1,7 @@
 package com.ebay.dozhao.myweatherapp
 
 import android.content.Context
+import com.ebay.dozhao.myweatherapp.event.UpdateRecentSearchDoneEvent
 import org.greenrobot.eventbus.EventBus
 import java.util.concurrent.Executors
 

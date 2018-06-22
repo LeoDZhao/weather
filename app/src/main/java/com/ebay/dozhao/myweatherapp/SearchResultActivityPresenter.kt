@@ -4,12 +4,14 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.ebay.dozhao.myweatherapp.event.SearchDoneEvent
+import com.ebay.dozhao.myweatherapp.raw.RawCurrentWeather
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.text.SimpleDateFormat
 import java.util.*
 
-class SearchResultPresenter(private val activity: SearchResultActivity) {
+class SearchResultActivityPresenter(private val activity: SearchResultActivity) {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchDoneEvent(event: SearchDoneEvent) {

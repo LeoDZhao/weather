@@ -1,4 +1,4 @@
-package com.ebay.dozhao.myweatherapp
+package com.ebay.dozhao.myweatherapp.raw
 
 import com.google.gson.annotations.SerializedName
 

@@ -1,4 +1,4 @@
-package com.ebay.dozhao.myweatherapp
+package com.ebay.dozhao.myweatherapp.raw
 
 class RawMainAttribute {
     var temp = 0.0

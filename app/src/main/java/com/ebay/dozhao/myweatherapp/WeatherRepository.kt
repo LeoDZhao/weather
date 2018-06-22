@@ -1,5 +1,7 @@
 package com.ebay.dozhao.myweatherapp
 
+import com.ebay.dozhao.myweatherapp.event.SearchDoneEvent
+import com.ebay.dozhao.myweatherapp.raw.RawCurrentWeather
 import org.greenrobot.eventbus.EventBus
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -15,7 +17,7 @@ object WeatherRepository {
                 .build()
         val weatherService = retrofit.create(WeatherService::class.java)
         val response =
-                if (query.first().isLetter()) weatherService.currentWeatherByCitiyName(query).execute()
+                if (query.first().isLetter()) weatherService.currentWeatherByCityName(query).execute()
                 else weatherService.currentWeatherByZipCode(query).execute()
 
         val event = SearchDoneEvent()

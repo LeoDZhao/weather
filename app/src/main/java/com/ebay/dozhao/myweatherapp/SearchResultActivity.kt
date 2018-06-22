@@ -11,12 +11,12 @@ import java.util.concurrent.Executors
 
 class SearchResultActivity : AppCompatActivity() {
 
-    private var presenter: SearchResultPresenter? = null
+    private var presenter: SearchResultActivityPresenter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search_result)
-        presenter = SearchResultPresenter(this)
+        presenter = SearchResultActivityPresenter(this)
         EventBus.getDefault().register(presenter)
 
         if (Intent.ACTION_SEARCH == intent.action) {
