@@ -3,6 +3,7 @@ package com.ebay.dozhao.myweatherapp
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.ebay.dozhao.myweatherapp.event.SearchDoneEvent
 import com.ebay.dozhao.myweatherapp.raw.RawCurrentWeather
@@ -15,6 +16,11 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchDoneEvent(event: SearchDoneEvent) {
+        if (event.message.isNotEmpty()) {
+            Toast.makeText(activity, event.message, Toast.LENGTH_LONG).show()
+            return
+        }
+
         val progressBar: View = activity.findViewById(R.id.progressBar)
         progressBar.visibility = View.GONE
 

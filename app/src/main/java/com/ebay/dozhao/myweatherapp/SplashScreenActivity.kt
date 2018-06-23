@@ -1,6 +1,5 @@
 package com.ebay.dozhao.myweatherapp
 
-import android.app.SearchManager
 import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
@@ -32,10 +31,7 @@ class SplashScreenActivity : AppCompatActivity() {
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onUpdateRecentSearchDoneEvent(event: UpdateRecentSearchDoneEvent) {
         if (RecentSearchRepository.recentSearches.isNotEmpty()) {
-            val intent = Intent(this, SearchResultActivity::class.java)
-            intent.action = Intent.ACTION_SEARCH
-            intent.putExtra(SearchManager.QUERY, RecentSearchRepository.recentSearches[0])
-            startActivity(intent)
+            NavigationUtils.startSearchResultActivity(this, RecentSearchRepository.recentSearches[0])
         } else {
             val intent = Intent(this, SearchActivity::class.java)
             startActivity(intent)

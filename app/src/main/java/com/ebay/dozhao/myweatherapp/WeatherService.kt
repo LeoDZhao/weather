@@ -13,4 +13,7 @@ interface WeatherService {
 
     @GET("data/2.5/weather?APPID=$APIKEY")
     fun currentWeatherByZipCode(@Query("zip") zip: String): Call<RawCurrentWeather>
+
+    @GET("data/2.5/weather?APPID=$APIKEY")
+    fun currentWeatherByLatLon(@Query("lat") lat: String, @Query("lon") lon: String): Call<RawCurrentWeather>
 }
