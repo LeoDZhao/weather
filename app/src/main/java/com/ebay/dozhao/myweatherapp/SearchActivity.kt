@@ -22,7 +22,7 @@ class SearchActivity : AppCompatActivity() {
     override fun onResume() {
         super.onResume()
         presenter?.cleanSearchView()
-        presenter?.setVisibilityForRecentSearch()
+        presenter?.dynamicallyChangeVisibilityForRecentSearchLayout()
     }
 
     override fun onStop() {

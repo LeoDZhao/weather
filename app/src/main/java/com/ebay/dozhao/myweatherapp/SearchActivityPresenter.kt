@@ -16,6 +16,7 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
     private var permissionChecker: PermissionChecker = PermissionChecker
     private var geoLocation: GeoLocation = GeoLocation
     private var navigationUtils: NavigationUtils = NavigationUtils
+    private var recentSearchRepository: RecentSearchRepository = RecentSearchRepository
 
     @SuppressLint("MissingPermission")
     override fun onClick(view: View?) {
@@ -24,6 +25,7 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
                 permissionChecker.requestPermission(activity, PermissionChecker.PermissionType.LOCATION)
             } else {
                 requestSingleLocationUpdate()
+                showProgressBar()
             }
         }
     }
@@ -39,9 +41,9 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
         searchView.clearFocus()
     }
 
-    fun setVisibilityForRecentSearch() {
+    fun dynamicallyChangeVisibilityForRecentSearchLayout() {
         val recentSearchLayout = activity.findViewById<View>(R.id.recent_search_layout)
-        if (RecentSearchRepository.recentSearches.isEmpty()) {
+        if (recentSearchRepository.recentSearches.isEmpty()) {
             recentSearchLayout.visibility = View.GONE
         } else {
             recentSearchLayout.visibility = View.VISIBLE
@@ -50,6 +52,9 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
 
     private fun requestSingleLocationUpdate() {
         geoLocation.requestSingleLocationUpdate()
+    }
+
+    private fun showProgressBar() {
         val progressBar = activity.findViewById<View>(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
     }
@@ -60,6 +65,7 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
                 // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     requestSingleLocationUpdate()
+                    showProgressBar()
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -98,6 +104,11 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
     //For test
     fun setNavigationUtils(navigationUtils: NavigationUtils) {
         this.navigationUtils = navigationUtils
+    }
+
+    //For test
+    fun setRecentSearchRepository(recentSearchRepository: RecentSearchRepository) {
+        this.recentSearchRepository = recentSearchRepository
     }
 
 }

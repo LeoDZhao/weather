@@ -1,5 +1,6 @@
 package com.ebay.dozhao.myweatherapp
 
+import android.content.pm.PackageManager
 import android.view.View
 import android.widget.ProgressBar
 import com.ebay.dozhao.myweatherapp.event.LocationChangedEvent
@@ -23,13 +24,17 @@ class SearchActivityPresenterTest {
     @Mock
     private lateinit var mockGpsLocationIcon: View
     @Mock
+    private lateinit var mockProgressBar: ProgressBar
+    @Mock
+    private lateinit var mockRecentSearchLayout: View
+    @Mock
     private lateinit var mockPermissionChecker: PermissionChecker
     @Mock
     private lateinit var mockGeoLocation: GeoLocation
     @Mock
-    private lateinit var mockProgressBar: ProgressBar
-    @Mock
     private lateinit var mockNavigationUtils: NavigationUtils
+    @Mock
+    private lateinit var mockRecentSearchRepository: RecentSearchRepository
 
     private lateinit var searchActivityPresenter: SearchActivityPresenter
 
@@ -40,8 +45,10 @@ class SearchActivityPresenterTest {
         searchActivityPresenter.setPermissionCheckerObject(mockPermissionChecker)
         searchActivityPresenter.setGeoLocationObject(mockGeoLocation)
         searchActivityPresenter.setNavigationUtils(mockNavigationUtils)
+        searchActivityPresenter.setRecentSearchRepository(mockRecentSearchRepository)
         `when`(mockGpsLocationIcon.id).thenReturn(R.id.gps_locaiton_icon)
         `when`(mockActivity.findViewById<View>(R.id.progressBar)).thenReturn(mockProgressBar)
+        `when`(mockActivity.findViewById<View>(R.id.recent_search_layout)).thenReturn(mockRecentSearchLayout)
         `when`(mockGeoLocation.latitude).thenReturn(EXPECTED_LAT)
         `when`(mockGeoLocation.longitude).thenReturn(EXPECTED_LON)
     }
@@ -68,8 +75,39 @@ class SearchActivityPresenterTest {
         thenStartSearchResultActivityWithQuery("lat=$EXPECTED_LAT&lon=$EXPECTED_LON")
     }
 
+    @Test
+    fun shouldHideRecentSearchLayoutWhenThereIsNoRecentSearch() {
+        givenThereIsNoRecentSearch()
+        whenDynamicallyChangeVisibilityForRecentSearchLayout()
+        thenRecentSearchLayoutIsGone()
+    }
+
+    @Test
+    fun shouldShowRecentSearchLayoutWhenThereIsOneRecentSearch() {
+        givenThereIsOneRecentSearch()
+        whenDynamicallyChangeVisibilityForRecentSearchLayout()
+        thenRecentSearchLayoutIsVisible()
+    }
+
+    @Test
+    fun shouldRequestLocationAndShowProgressBarWhenLocationPermissionIsGrantedByUser() {
+        whenLocationPermissionIsGrantedByUser()
+        thenSingleLocationUpdateIsRequested()
+        thenProgressBarIsVisible()
+    }
+
     private fun givenLocationPermissionIsGranted(boolean: Boolean) {
         `when`(mockPermissionChecker.isPermissionGranted(PermissionChecker.PermissionType.LOCATION)).thenReturn(boolean)
+    }
+
+    private fun givenThereIsNoRecentSearch() {
+        `when`(mockRecentSearchRepository.recentSearches).thenReturn(ArrayList())
+    }
+
+    private fun givenThereIsOneRecentSearch() {
+        val recentSearches = ArrayList<String>()
+        recentSearches.add("test recent search")
+        `when`(mockRecentSearchRepository.recentSearches).thenReturn(recentSearches)
     }
 
     private fun whenGpsLocationIconIsClicked() {
@@ -78,6 +116,17 @@ class SearchActivityPresenterTest {
 
     private fun whenLocaitonUpdateIsDone() {
         searchActivityPresenter.onLocationChangedEvent(LocationChangedEvent())
+    }
+
+    private fun whenDynamicallyChangeVisibilityForRecentSearchLayout() {
+        searchActivityPresenter.dynamicallyChangeVisibilityForRecentSearchLayout()
+    }
+
+    private fun whenLocationPermissionIsGrantedByUser() {
+        val permissions = arrayOf("")
+        val grantResults = IntArray(1)
+        grantResults[0] = PackageManager.PERMISSION_GRANTED
+        searchActivityPresenter.onRequestPermissionsResult(PermissionChecker.PermissionType.LOCATION.ordinal, permissions, grantResults)
     }
 
     private fun thenLocationPermissionShouldBeRequested() {
@@ -98,5 +147,13 @@ class SearchActivityPresenterTest {
 
     private fun thenStartSearchResultActivityWithQuery(query: String) {
         verify(mockNavigationUtils).startSearchResultActivity(mockActivity, query)
+    }
+
+    private fun thenRecentSearchLayoutIsGone() {
+        verify(mockRecentSearchLayout).visibility = View.GONE
+    }
+
+    private fun thenRecentSearchLayoutIsVisible() {
+        verify(mockRecentSearchLayout).visibility = View.VISIBLE
     }
 }

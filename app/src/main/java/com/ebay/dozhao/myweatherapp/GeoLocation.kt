@@ -37,20 +37,13 @@ object GeoLocation : LocationListener {
         Log.d("dozhao", "onProviderDisabled")
     }
 
-    private var locationManager: LocationManager = MyApplication.instance?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
-
     @SuppressLint("MissingPermission")
-    fun requestSingleLocationUpdate() {
+    fun requestSingleLocationUpdate(locationManager: LocationManager = MyApplication.instance?.getSystemService(Context.LOCATION_SERVICE) as LocationManager) {
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null)
         } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
             locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this, null)
         }
-    }
-
-    //For Test
-    fun setLocationManager(locationManager: LocationManager) {
-        this.locationManager = locationManager
     }
 }
 

@@ -20,7 +20,6 @@ class GeoLocationTest {
     @Before
     fun setUp() {
         MockitoAnnotations.initMocks(this)
-        GeoLocation.setLocationManager(mockLocationManager)
     }
 
     @Test
@@ -55,7 +54,7 @@ class GeoLocationTest {
     }
 
     private fun whenRequestSingleLocationUpdate() {
-        GeoLocation.requestSingleLocationUpdate()
+        GeoLocation.requestSingleLocationUpdate(mockLocationManager)
     }
 
     private fun thenLocationManagerUseGpsProviderToRequestSingleUpdate() {
