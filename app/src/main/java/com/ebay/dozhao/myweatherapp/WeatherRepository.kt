@@ -36,7 +36,7 @@ object WeatherRepository {
         } else if (query.matches("^\\d+(?:[-\\s]\\d+)?\$".toRegex())) {
             response = weatherService.currentWeatherByZipCode(query).execute()
         } else {
-            response = weatherService.currentWeatherByZipCode(query).execute()
+            response = weatherService.currentWeatherByCityName(query).execute()
         }
 
         val event = SearchDoneEvent()
