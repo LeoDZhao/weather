@@ -24,7 +24,7 @@
             android:layout_marginEnd="28dp"
             android:layout_marginStart="28dp"
             android:layout_marginTop="16dp"
-            android:text="@string/default_text"
+            android:text="@string/unknown"
             android:textAppearance="@android:style/TextAppearance.Material.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -48,7 +48,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="52dp"
             android:layout_marginTop="28dp"
-            android:text="@string/default_text"
+            android:text="@string/unknown"
             android:textAppearance="@style/TextAppearance.AppCompat.Large"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
@@ -63,7 +63,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="28dp"
             android:layout_marginTop="28dp"
-            android:text="@string/default_text"
+            android:text="@string/unknown"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/icon" />
@@ -75,7 +75,7 @@
             android:layout_marginEnd="16dp"
             android:layout_marginStart="28dp"
             android:layout_marginTop="14dp"
-            android:text="@string/default_text"
+            android:text="@string/unknown"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/mainWeather" />
@@ -111,7 +111,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="28dp"
-            android:text="@string/default_text"
+            android:text="@string/unknown"
             app:layout_constraintBaseline_toBaselineOf="@+id/wind"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/wind" />
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="28dp"
-            android:text="@string/default_text"
+            android:text="@string/unknown"
             app:layout_constraintBaseline_toBaselineOf="@+id/cloudiness"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/cloudiness" />
@@ -157,7 +157,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="28dp"
-            android:text="@string/default_text"
+            android:text="@string/unknown"
             app:layout_constraintBaseline_toBaselineOf="@+id/pressure"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/pressure" />
@@ -180,7 +180,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="28dp"
-            android:text="@string/default_text"
+            android:text="@string/unknown"
             app:layout_constraintBaseline_toBaselineOf="@+id/humidity"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/humidity" />
@@ -203,7 +203,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="28dp"
-            android:text="@string/default_text"
+            android:text="@string/unknown"
             app:layout_constraintBaseline_toBaselineOf="@+id/sunrise"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/sunrise" />
@@ -226,7 +226,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="28dp"
-            android:text="@string/default_text"
+            android:text="@string/unknown"
             app:layout_constraintBaseline_toBaselineOf="@+id/sunset"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/sunset" />
@@ -249,7 +249,7 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="16dp"
             android:layout_marginStart="28dp"
-            android:text="@string/default_text"
+            android:text="@string/unknown"
             app:layout_constraintBaseline_toBaselineOf="@+id/coords"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/coords" />

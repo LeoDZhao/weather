@@ -69,7 +69,11 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
         val currentWeather: RawCurrentWeather? = WeatherRepository.getCurrentWeather()
         currentWeather?.let {
             val titleTextView: TextView = activity.findViewById(R.id.title)
-            titleTextView.text = "Weather in ${it.name}"
+            var title = it.name
+            if (title.isEmpty()) {
+                title = activity.resources.getString(R.string.unknown)
+            }
+            titleTextView.text = activity.resources.getString(R.string.weather_detail_title, title)
 
             val firstWeather = it.weatherList.firstOrNull()
             firstWeather?.let {
@@ -87,9 +91,9 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
             temperatureTextView.text = it.mainAttribute.temp.toString()
 
             val simpleDateFormatDayLevel = SimpleDateFormat("yyyy/MM/dd", Locale.CANADA)
-            val currentDateandTime = simpleDateFormatDayLevel.format(Date())
+            val currentDateTime = simpleDateFormatDayLevel.format(Date())
             val dateTextView: TextView = activity.findViewById(R.id.date)
-            dateTextView.text = currentDateandTime
+            dateTextView.text = currentDateTime
 
             val windDetailTextView: TextView = activity.findViewById(R.id.windDetail)
             windDetailTextView.text = it.wind.speed.toString()
@@ -117,13 +121,6 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
 
             hideProgressBar()
             showWeatherDetailLayout()
-            return
-        }
-
-        if (currentWeather==null) {
-            hideProgressBar()
-            errorMessage.text = "UnKnown exception. This should never happen"
-            showErrorMessage()
             return
         }
     }
