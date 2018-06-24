@@ -41,7 +41,7 @@ object WeatherRepository {
 
         val event = SearchDoneEvent()
         when {
-            response == null -> event.message = "Error: response is null"
+            response == null -> event.errorMessage = "Error: No response return form server"
             response.isSuccessful -> {
                 val body = response.body()
                 body?.let {
@@ -49,7 +49,7 @@ object WeatherRepository {
                 }
                 RecentSearchRepository.addRecentSearch(query)
             }
-            else -> event.message = "Error: " + response.code().toString() + "\n" + response.message()
+            else -> event.errorMessage = "Error: " + response.code().toString() + "\n" + response.message()
         }
         EventBus.getDefault().post(event)
     }

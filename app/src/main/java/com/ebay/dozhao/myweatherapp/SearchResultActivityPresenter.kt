@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import com.bumptech.glide.Glide
 import com.ebay.dozhao.myweatherapp.event.SearchDoneEvent
 import com.ebay.dozhao.myweatherapp.raw.RawCurrentWeather
@@ -17,6 +16,11 @@ import java.util.concurrent.Executors
 
 class SearchResultActivityPresenter(private val activity: SearchResultActivity) {
 
+    private val progressBar: View = activity.findViewById(R.id.progressBar)
+    private val weatherDetailLayout: View = activity.findViewById(R.id.weather_detail_layout)
+    private val errorMessage = activity.findViewById<TextView>(R.id.error_message)
+
+
     fun processIntent(intent: Intent) {
         if (Intent.ACTION_SEARCH == intent.action) {
             val query = intent.getStringExtra(SearchManager.QUERY)
@@ -24,18 +28,43 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
             executor.execute {
                 WeatherRepository.requestWeatherFromAPI(query)
             }
+            hideWeatherDetailLayout()
+            showProgressBar()
         }
+    }
+
+    private fun showProgressBar() {
+        progressBar.visibility = View.VISIBLE
+    }
+
+    private fun hideProgressBar() {
+        progressBar.visibility = View.GONE
+    }
+
+    private fun showWeatherDetailLayout() {
+        weatherDetailLayout.visibility = View.VISIBLE
+    }
+
+    private fun hideWeatherDetailLayout() {
+        weatherDetailLayout.visibility = View.GONE
+    }
+
+    private fun showErrorMessage() {
+        errorMessage.visibility = View.VISIBLE
+    }
+
+    private fun hideErrorMessage() {
+        errorMessage.visibility = View.GONE
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchDoneEvent(event: SearchDoneEvent) {
-        if (event.message.isNotEmpty()) {
-            Toast.makeText(activity, event.message, Toast.LENGTH_LONG).show()
+        if (event.errorMessage.isNotEmpty()) {
+            hideProgressBar()
+            errorMessage.text = event.errorMessage
+            showErrorMessage()
             return
         }
-
-        val progressBar: View = activity.findViewById(R.id.progressBar)
-        progressBar.visibility = View.GONE
 
         val currentWeather: RawCurrentWeather? = WeatherRepository.getCurrentWeather()
         currentWeather?.let {
@@ -86,9 +115,16 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
             val coords = "lat: ${it.coord.lat}, lon: ${it.coord.lon}"
             geoCoordTextView.text = coords
 
-            val layout = activity.findViewById<View>(R.id.constraintLayout)
-            layout.visibility = View.VISIBLE
+            hideProgressBar()
+            showWeatherDetailLayout()
+            return
         }
 
+        if (currentWeather==null) {
+            hideProgressBar()
+            errorMessage.text = "UnKnown exception. This should never happen"
+            showErrorMessage()
+            return
+        }
     }
 }
