@@ -1,40 +1,26 @@
 package com.ebay.dozhao.myweatherapp
 
-import android.content.Intent
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
-import com.ebay.dozhao.myweatherapp.event.UpdateRecentSearchDoneEvent
 import org.greenrobot.eventbus.EventBus
-import org.greenrobot.eventbus.Subscribe
-import org.greenrobot.eventbus.ThreadMode
 
 class SplashScreenActivity : AppCompatActivity() {
+    private lateinit var presenter: SplashScreenActivityPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash_screen)
-        EventBus.getDefault().register(this)
+        presenter = SplashScreenActivityPresenter(this)
+        EventBus.getDefault().register(presenter)
     }
 
     override fun onResume() {
         super.onResume()
-        RecentSearchRepository.updateRecentSearches()
-        Log.d("dozhao", "onResume continures")
+        presenter.updateRecentSearches()
     }
 
     override fun onStop() {
         super.onStop()
-        EventBus.getDefault().unregister(this)
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onUpdateRecentSearchDoneEvent(event: UpdateRecentSearchDoneEvent) {
-        if (RecentSearchRepository.recentSearches.isNotEmpty()) {
-            NavigationUtils.startSearchResultActivity(this, RecentSearchRepository.recentSearches[0])
-        } else {
-            val intent = Intent(this, SearchActivity::class.java)
-            startActivity(intent)
-        }
+        EventBus.getDefault().unregister(presenter)
     }
 }

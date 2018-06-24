@@ -7,22 +7,22 @@ import org.greenrobot.eventbus.EventBus
 
 
 class SearchActivity : AppCompatActivity() {
-    private var presenter: SearchActivityPresenter? = null
+    private lateinit var presenter: SearchActivityPresenter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
         presenter = SearchActivityPresenter(this)
         EventBus.getDefault().register(presenter)
-        presenter?.cleanSearchView()
+        presenter.cleanSearchView()
         val gpsLocationIcon = findViewById<View>(R.id.gps_locaiton_icon)
         gpsLocationIcon.setOnClickListener(presenter)
     }
 
     override fun onResume() {
         super.onResume()
-        presenter?.cleanSearchView()
-        presenter?.dynamicallyChangeVisibilityForRecentSearchLayout()
+        presenter.cleanSearchView()
+        presenter.dynamicallyChangeVisibilityForRecentSearchLayout()
     }
 
     override fun onStop() {
@@ -31,6 +31,6 @@ class SearchActivity : AppCompatActivity() {
     }
 
     override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
-        presenter?.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        presenter.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 }

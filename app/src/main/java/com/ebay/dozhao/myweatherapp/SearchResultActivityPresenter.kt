@@ -1,5 +1,7 @@
 package com.ebay.dozhao.myweatherapp
 
+import android.app.SearchManager
+import android.content.Intent
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -11,8 +13,19 @@ import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.Executors
 
 class SearchResultActivityPresenter(private val activity: SearchResultActivity) {
+
+    fun processIntent(intent: Intent) {
+        if (Intent.ACTION_SEARCH == intent.action) {
+            val query = intent.getStringExtra(SearchManager.QUERY)
+            val executor = Executors.newSingleThreadExecutor()
+            executor.execute {
+                WeatherRepository.requestWeatherFromAPI(query)
+            }
+        }
+    }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchDoneEvent(event: SearchDoneEvent) {
