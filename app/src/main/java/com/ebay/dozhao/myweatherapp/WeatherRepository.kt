@@ -10,14 +10,21 @@ import java.util.regex.Pattern
 
 object WeatherRepository {
     private var currentWeather: RawCurrentWeather? = null
+    private var weatherService: WeatherService
+    private var recentSearchRepository: RecentSearchRepository = RecentSearchRepository
+    private var searchDoneEvent: SearchDoneEvent = SearchDoneEvent()
 
-    fun requestWeatherFromAPI(query: String) {
-        if (query.isEmpty()) return
+    init {
         val retrofit = Retrofit.Builder()
                 .baseUrl("http://api.openweathermap.org/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build()
-        val weatherService = retrofit.create(WeatherService::class.java)
+        weatherService = retrofit.create(WeatherService::class.java)
+    }
+
+    fun requestWeatherFromAPI(query: String) {
+        if (query.isEmpty()) return
+
         var response: Response<RawCurrentWeather>? = null
 
         val regexForDouble = "-?\\d+\\.?\\d*"
@@ -36,23 +43,42 @@ object WeatherRepository {
         } else if (query.matches("^\\d+(?:[-\\s]\\d+)?\$".toRegex())) {
             response = weatherService.currentWeatherByZipCode(query).execute()
         } else {
-            response = weatherService.currentWeatherByCityName(query).execute()
+            response = weatherService.currentWeatherByLocationName(query).execute()
         }
 
-        val event = SearchDoneEvent()
+        searchDoneEvent.errorMessage = ""
         when {
-            response == null -> event.errorMessage = "Error: No response return form server"
+            response == null -> searchDoneEvent.errorMessage = SearchDoneEvent.ErrorMessageDetail.NO_RESPONSE.toString()
             response.isSuccessful -> {
                 val body = response.body()
-                body?.let {
-                    currentWeather = it
+                if (body == null) {
+                    searchDoneEvent.errorMessage = SearchDoneEvent.ErrorMessageDetail.NO_RESPONSE_BODY.toString()
+                } else {
+                    currentWeather = body
+                    recentSearchRepository.addRecentSearch(query)
                 }
-                RecentSearchRepository.addRecentSearch(query)
             }
-            else -> event.errorMessage = "Error: " + response.code().toString() + "\n" + response.message()
+            else -> searchDoneEvent.errorMessage = SearchDoneEvent.ErrorMessageDetail.RESPONSE_NOT_SUCCESSFUL.toString() + "\n" +
+                    response.code().toString() + "\n" +
+                    response.message()
         }
-        EventBus.getDefault().post(event)
+        EventBus.getDefault().post(searchDoneEvent)
     }
 
     fun getCurrentWeather() = currentWeather
+
+    //Fot test
+    fun setWeatherService(weatherService: WeatherService) {
+        this.weatherService = weatherService
+    }
+
+    //For test
+    fun setRecentSearchRepository(recentSearchRepository: RecentSearchRepository) {
+        this.recentSearchRepository = recentSearchRepository
+    }
+
+    //For test
+    fun setSearchDoneEvent(searchDoneEvent: SearchDoneEvent) {
+        this.searchDoneEvent = searchDoneEvent
+    }
 }
