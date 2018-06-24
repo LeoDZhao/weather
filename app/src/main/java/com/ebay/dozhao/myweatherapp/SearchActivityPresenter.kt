@@ -16,7 +16,7 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
     @SuppressLint("MissingPermission")
     override fun onClick(view: View?) {
         if (view?.id == R.id.gps_locaiton_icon) {
-            if (!GeoLocation.isLocationPermissionGranted()) {
+            if (!PermissionChecker.isPermissionGranted(PermissionChecker.PermissionType.LOCATION)) {
                 GeoLocation.requestLocationPermission(activity)
             } else {
                 requestLocationUpdates()
@@ -45,7 +45,7 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
     }
 
     private fun requestLocationUpdates() {
-        GeoLocation.requestLocationUpdates()
+        GeoLocation.requestSingleLocationUpdate()
         val progressBar = activity.findViewById<View>(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
     }

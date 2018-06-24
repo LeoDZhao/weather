@@ -45,19 +45,19 @@ object GeoLocation : LocationListener {
     }
 
     @SuppressLint("MissingPermission")
-    fun requestLocationUpdates() {
-        if (!isLocationPermissionGranted()) {
-            return
-        }
-        when {
-            locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) -> {
-                locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null)
-            }
-            locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER) -> {
-                locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this, null)
-            }
+    fun requestSingleLocationUpdate() {
+        if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            locationManager.requestSingleUpdate(LocationManager.GPS_PROVIDER, this, null)
+        } else if (locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)) {
+            locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this, null)
         }
     }
 
     fun isLocationPermissionGranted(): Boolean = PermissionChecker.isPermissionGranted(PermissionChecker.PermissionType.LOCATION)
+
+    //For Test
+    fun setLocationManager(locationManager: LocationManager) {
+        this.locationManager = locationManager
+    }
 }
+
