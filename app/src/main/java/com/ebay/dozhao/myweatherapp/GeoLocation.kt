@@ -1,7 +1,6 @@
 package com.ebay.dozhao.myweatherapp
 
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.location.Location
 import android.location.LocationListener
@@ -40,10 +39,6 @@ object GeoLocation : LocationListener {
 
     private var locationManager: LocationManager = MyApplication.instance?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-    fun requestLocationPermission(activity: Activity) {
-        PermissionChecker.requestPermission(activity, PermissionChecker.PermissionType.LOCATION)
-    }
-
     @SuppressLint("MissingPermission")
     fun requestSingleLocationUpdate() {
         if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -52,8 +47,6 @@ object GeoLocation : LocationListener {
             locationManager.requestSingleUpdate(LocationManager.NETWORK_PROVIDER, this, null)
         }
     }
-
-    fun isLocationPermissionGranted(): Boolean = PermissionChecker.isPermissionGranted(PermissionChecker.PermissionType.LOCATION)
 
     //For Test
     fun setLocationManager(locationManager: LocationManager) {

@@ -13,13 +13,17 @@ import org.greenrobot.eventbus.ThreadMode
 
 
 class SearchActivityPresenter(private val activity: SearchActivity) : View.OnClickListener {
+    private var permissionChecker: PermissionChecker = PermissionChecker
+    private var geoLocation: GeoLocation = GeoLocation
+    private var navigationUtils: NavigationUtils = NavigationUtils
+
     @SuppressLint("MissingPermission")
     override fun onClick(view: View?) {
         if (view?.id == R.id.gps_locaiton_icon) {
-            if (!PermissionChecker.isPermissionGranted(PermissionChecker.PermissionType.LOCATION)) {
-                GeoLocation.requestLocationPermission(activity)
+            if (!permissionChecker.isPermissionGranted(PermissionChecker.PermissionType.LOCATION)) {
+                permissionChecker.requestPermission(activity, PermissionChecker.PermissionType.LOCATION)
             } else {
-                requestLocationUpdates()
+                requestSingleLocationUpdate()
             }
         }
     }
@@ -44,17 +48,10 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
         }
     }
 
-    private fun requestLocationUpdates() {
-        GeoLocation.requestSingleLocationUpdate()
+    private fun requestSingleLocationUpdate() {
+        geoLocation.requestSingleLocationUpdate()
         val progressBar = activity.findViewById<View>(R.id.progressBar)
         progressBar.visibility = View.VISIBLE
-    }
-
-    private fun goToSearchResultActivityWithLatLon() {
-        val latitude = GeoLocation.latitude
-        val longitude = GeoLocation.longitude
-        val query = "lat=$latitude&lon=$longitude"
-        NavigationUtils.startSearchResultActivity(activity, query)
     }
 
     fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
@@ -62,7 +59,7 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
             PermissionChecker.PermissionType.LOCATION.ordinal -> {
                 // If request is cancelled, the result arrays are empty.
                 if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    requestLocationUpdates()
+                    requestSingleLocationUpdate()
                 } else {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
@@ -82,7 +79,25 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
     fun onLocationChangedEvent(event: LocationChangedEvent) {
         val progressBar = activity.findViewById<View>(R.id.progressBar)
         progressBar.visibility = View.GONE
-        goToSearchResultActivityWithLatLon()
+        val latitude = geoLocation.latitude
+        val longitude = geoLocation.longitude
+        val query = "lat=$latitude&lon=$longitude"
+        navigationUtils.startSearchResultActivity(activity, query)
+    }
+
+    //For test
+    fun setPermissionCheckerObject(permissionChecker: PermissionChecker) {
+        this.permissionChecker = permissionChecker
+    }
+
+    //For test
+    fun setGeoLocationObject(geoLocation: GeoLocation) {
+        this.geoLocation = geoLocation
+    }
+
+    //For test
+    fun setNavigationUtils(navigationUtils: NavigationUtils) {
+        this.navigationUtils = navigationUtils
     }
 
 }
