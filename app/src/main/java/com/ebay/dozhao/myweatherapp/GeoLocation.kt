@@ -9,6 +9,8 @@ import android.os.Bundle
 import android.util.Log
 import com.ebay.dozhao.myweatherapp.event.LocationChangedEvent
 import org.greenrobot.eventbus.EventBus
+import java.math.BigDecimal
+import java.math.RoundingMode
 
 object GeoLocation : LocationListener {
     private const val INIT_IMPOSSIBLE_LAT = 91.0
@@ -19,8 +21,8 @@ object GeoLocation : LocationListener {
     override fun onLocationChanged(location: Location?) {
         Log.d("dozhao", "onLocationChanged")
         location?.let {
-            latitude = it.latitude
-            longitude = it.longitude
+            latitude = BigDecimal.valueOf(it.latitude).setScale(4, RoundingMode.HALF_UP).toDouble()
+            longitude = BigDecimal.valueOf(it.longitude).setScale(4, RoundingMode.HALF_UP).toDouble()
             EventBus.getDefault().post(LocationChangedEvent())
         }
     }

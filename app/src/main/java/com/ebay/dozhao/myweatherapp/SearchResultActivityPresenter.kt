@@ -73,7 +73,7 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
             if (title.isEmpty()) {
                 title = activity.resources.getString(R.string.unknown)
             }
-            titleTextView.text = activity.resources.getString(R.string.weather_detail_title, title)
+            titleTextView.text = title
 
             val firstWeather = it.weatherList.firstOrNull()
             firstWeather?.let {
@@ -88,7 +88,7 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
 
 
             val temperatureTextView: TextView = activity.findViewById(R.id.temperature)
-            temperatureTextView.text = it.mainAttribute.temp.toString()
+            temperatureTextView.text = activity.resources.getString(R.string.temperature, it.mainAttribute.temp.toString())
 
             val simpleDateFormatDayLevel = SimpleDateFormat("yyyy/MM/dd", Locale.CANADA)
             val currentDateTime = simpleDateFormatDayLevel.format(Date())

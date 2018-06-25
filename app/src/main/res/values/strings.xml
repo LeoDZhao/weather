@@ -10,5 +10,5 @@
     <string name="sunset">Sunset</string>
     <string name="coords">Geo coords</string>
     <string name="recent_search">Recent Search:</string>
-    <string name="weather_detail_title">"Weather in %s"</string>
+    <string name="temperature">%s \u00b0F</string>
 </resources>
