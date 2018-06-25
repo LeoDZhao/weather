@@ -96,8 +96,8 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
     fun onLocationChangedEvent(event: LocationChangedEvent) {
         val progressBar = activity.findViewById<View>(R.id.progressBar)
         progressBar.visibility = View.GONE
-        val latitude = geoLocation.latitude.toInt()
-        val longitude = geoLocation.longitude.toInt()
+        val latitude = geoLocation.latitude
+        val longitude = geoLocation.longitude
         val query = "lat=$latitude&lon=$longitude"
         navigationUtils.startSearchResultActivity(activity, query)
     }
