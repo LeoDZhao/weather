@@ -5,6 +5,8 @@ import android.app.SearchManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.pm.PackageManager
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.SearchView
 import com.ebay.dozhao.myweatherapp.event.LocationChangedEvent
@@ -20,7 +22,7 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
 
     @SuppressLint("MissingPermission")
     override fun onClick(view: View?) {
-        if (view?.id == R.id.gps_locaiton_icon) {
+        if (view?.id == R.id.gps_location_icon) {
             if (!permissionChecker.isPermissionGranted(PermissionChecker.PermissionType.LOCATION)) {
                 permissionChecker.requestPermission(activity, PermissionChecker.PermissionType.LOCATION)
             } else {
@@ -39,6 +41,15 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
         searchView.queryHint = activity.getString(R.string.search_hint)
         searchView.setIconifiedByDefault(false)
         searchView.clearFocus()
+    }
+
+    fun configureRecentSearchRecyclerView() {
+        val viewManager = LinearLayoutManager(activity)
+        val viewAdapter = RecentSearchRecyclerViewAdapter(recentSearchRepository.recentSearches)
+        val recentSearchRecyclerView = activity.findViewById<RecyclerView>(R.id.recent_search_recycler_view)
+        recentSearchRecyclerView.setHasFixedSize(true)
+        recentSearchRecyclerView.layoutManager = viewManager
+        recentSearchRecyclerView.adapter = viewAdapter
     }
 
     fun dynamicallyChangeVisibilityForRecentSearchLayout() {
@@ -85,8 +96,8 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
     fun onLocationChangedEvent(event: LocationChangedEvent) {
         val progressBar = activity.findViewById<View>(R.id.progressBar)
         progressBar.visibility = View.GONE
-        val latitude = geoLocation.latitude
-        val longitude = geoLocation.longitude
+        val latitude = geoLocation.latitude.toInt()
+        val longitude = geoLocation.longitude.toInt()
         val query = "lat=$latitude&lon=$longitude"
         navigationUtils.startSearchResultActivity(activity, query)
     }

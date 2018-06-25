@@ -46,7 +46,7 @@ class SearchActivityPresenterTest {
         searchActivityPresenter.setGeoLocationObject(mockGeoLocation)
         searchActivityPresenter.setNavigationUtils(mockNavigationUtils)
         searchActivityPresenter.setRecentSearchRepository(mockRecentSearchRepository)
-        `when`(mockGpsLocationIcon.id).thenReturn(R.id.gps_locaiton_icon)
+        `when`(mockGpsLocationIcon.id).thenReturn(R.id.gps_location_icon)
         `when`(mockActivity.findViewById<View>(R.id.progressBar)).thenReturn(mockProgressBar)
         `when`(mockActivity.findViewById<View>(R.id.recent_search_layout)).thenReturn(mockRecentSearchLayout)
         `when`(mockGeoLocation.latitude).thenReturn(EXPECTED_LAT)

@@ -1,12 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/recent_search_item"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="56dp"
+    android:orientation="vertical">
+
+    <View
+        android:id="@+id/divider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_weight="0"
+        android:background="?android:attr/listDivider" />
 
     <TextView
-        android:id="@+id/recent_search_text"
+        android:id="@+id/recent_search_item_text"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
-        android:text="TextView" />
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="4dp"
+        android:text="TextView"
+        android:textAppearance="@android:style/TextAppearance.Material.Medium" />
+
 </LinearLayout>

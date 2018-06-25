@@ -15,7 +15,8 @@ class SearchActivity : AppCompatActivity() {
         presenter = SearchActivityPresenter(this)
         EventBus.getDefault().register(presenter)
         presenter.cleanSearchView()
-        val gpsLocationIcon = findViewById<View>(R.id.gps_locaiton_icon)
+        presenter.configureRecentSearchRecyclerView()
+        val gpsLocationIcon = findViewById<View>(R.id.gps_location_icon)
         gpsLocationIcon.setOnClickListener(presenter)
     }
 
