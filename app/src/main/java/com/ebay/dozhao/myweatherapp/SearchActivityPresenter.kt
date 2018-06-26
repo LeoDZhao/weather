@@ -9,6 +9,7 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.view.View
 import android.widget.SearchView
+import android.widget.Toast
 import com.ebay.dozhao.myweatherapp.event.LocationChangedEvent
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
@@ -96,10 +97,14 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
     fun onLocationChangedEvent(event: LocationChangedEvent) {
         val progressBar = activity.findViewById<View>(R.id.progressBar)
         progressBar.visibility = View.GONE
-        val latitude = geoLocation.latitude
-        val longitude = geoLocation.longitude
-        val query = "lat=$latitude&lon=$longitude"
-        navigationUtils.startSearchResultActivity(activity, query)
+        if (event.locationUpdated) {
+            val latitude = geoLocation.latitude
+            val longitude = geoLocation.longitude
+            val query = "lat=$latitude&lon=$longitude"
+            navigationUtils.startSearchResultActivity(activity, query)
+        } else {
+            Toast.makeText(activity, "Get GPS location timeout.", Toast.LENGTH_SHORT).show()
+        }
     }
 
     //For test

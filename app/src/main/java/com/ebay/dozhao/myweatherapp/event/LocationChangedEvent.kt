@@ -1,3 +1,4 @@
 package com.ebay.dozhao.myweatherapp.event
 
-class LocationChangedEvent
+class LocationChangedEvent(var locationUpdated: Boolean) {
+}

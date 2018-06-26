@@ -3,9 +3,11 @@ package com.ebay.dozhao.myweatherapp
 import com.ebay.dozhao.myweatherapp.event.SearchDoneEvent
 import com.ebay.dozhao.myweatherapp.raw.RawCurrentWeather
 import org.greenrobot.eventbus.EventBus
+import retrofit2.Call
 import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.io.IOException
 import java.util.regex.Pattern
 
 object WeatherRepository {
@@ -25,7 +27,7 @@ object WeatherRepository {
     fun requestWeatherFromAPI(query: String) {
         if (query.isEmpty()) return
 
-        var response: Response<RawCurrentWeather>? = null
+        var call: Call<RawCurrentWeather>? = null
 
         val regexForDouble = "-?\\d+\\.?\\d*"
         if (query.matches("^lat=$regexForDouble&lon=$regexForDouble$".toRegex())) {
@@ -38,12 +40,21 @@ object WeatherRepository {
             }
             if (matcher.find()) {
                 lon = matcher.group(0)
-                response = weatherService.currentWeatherByLatLon(lat, lon).execute()
+                call = weatherService.currentWeatherByLatLon(lat, lon)
             }
         } else if (query.matches("^\\d+(?:[-\\s]\\d+)?\$".toRegex())) {
-            response = weatherService.currentWeatherByZipCode(query).execute()
+            call = weatherService.currentWeatherByZipCode(query)
         } else {
-            response = weatherService.currentWeatherByLocationName(query).execute()
+            call = weatherService.currentWeatherByLocationName(query)
+        }
+
+        val response: Response<RawCurrentWeather>?
+        try {
+            response = call?.execute()
+        } catch (ioException: IOException) {
+            searchDoneEvent.errorMessage = SearchDoneEvent.ErrorMessageDetail.NETWORK_EXCEPTION.toString()
+            EventBus.getDefault().post(searchDoneEvent)
+            return
         }
 
         searchDoneEvent.errorMessage = ""

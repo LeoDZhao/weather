@@ -70,7 +70,7 @@ class SearchActivityPresenterTest {
 
     @Test
     fun shouldHideProgressBarAndStartSearchResultActivityWithCorrectLatLonWhenLocationUpdateIsDone() {
-        whenLocaitonUpdateIsDone()
+        whenLocationUpdateIsDone()
         thenProgressBarIsGone()
         thenStartSearchResultActivityWithQuery("lat=$EXPECTED_LAT&lon=$EXPECTED_LON")
     }
@@ -114,8 +114,8 @@ class SearchActivityPresenterTest {
         searchActivityPresenter.onClick(mockGpsLocationIcon)
     }
 
-    private fun whenLocaitonUpdateIsDone() {
-        searchActivityPresenter.onLocationChangedEvent(LocationChangedEvent())
+    private fun whenLocationUpdateIsDone() {
+        searchActivityPresenter.onLocationChangedEvent(LocationChangedEvent(true))
     }
 
     private fun whenDynamicallyChangeVisibilityForRecentSearchLayout() {
