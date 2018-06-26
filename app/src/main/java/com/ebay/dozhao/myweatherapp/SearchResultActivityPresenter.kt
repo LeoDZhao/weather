@@ -19,6 +19,7 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
     private val progressBar: View = activity.findViewById(R.id.progressBar)
     private val weatherDetailLayout: View = activity.findViewById(R.id.weather_detail_layout)
     private val errorMessage = activity.findViewById<TextView>(R.id.error_message)
+    private var currentWeather: RawCurrentWeather? = null
 
 
     fun processIntent(intent: Intent) {
@@ -66,7 +67,7 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
             return
         }
 
-        val currentWeather: RawCurrentWeather? = WeatherRepository.getCurrentWeather()
+        currentWeather = WeatherRepository.getCurrentWeather()
         currentWeather?.let {
             val titleTextView: TextView = activity.findViewById(R.id.title)
             var title = it.name
@@ -90,8 +91,8 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
             val temperatureTextView: TextView = activity.findViewById(R.id.temperature)
             temperatureTextView.text = activity.resources.getString(R.string.temperature, it.mainAttribute.temp.toString())
 
-            val simpleDateFormatDayLevel = SimpleDateFormat("yyyy/MM/dd", Locale.CANADA)
-            val currentDateTime = simpleDateFormatDayLevel.format(Date())
+            val simpleDateFormatSecondLevel = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.CANADA)
+            val currentDateTime = simpleDateFormatSecondLevel.format(Date())
             val dateTextView: TextView = activity.findViewById(R.id.date)
             dateTextView.text = currentDateTime
 
@@ -107,21 +108,19 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
             val humidityTextView: TextView = activity.findViewById(R.id.humidityDetail)
             humidityTextView.text = it.mainAttribute.humidity.toString()
 
-            val sunriseDate = Date(it.sys.sunrise)
+            val sunriseDate = Date(it.sys.sunrise * 1000)
             val sunriseTextView: TextView = activity.findViewById(R.id.sunriseDetail)
             sunriseTextView.text = sunriseDate.toString()
 
-            val sunsetDate = Date(it.sys.sunset)
+            val sunsetDate = Date(it.sys.sunset * 1000)
             val sunsetTextView: TextView = activity.findViewById(R.id.sunsetDetail)
             sunsetTextView.text = sunsetDate.toString()
 
             val geoCoordTextView: TextView = activity.findViewById(R.id.coordsDetail)
             val coords = "lat: ${it.coord.lat}, lon: ${it.coord.lon}"
             geoCoordTextView.text = coords
-
-            hideProgressBar()
-            showWeatherDetailLayout()
-            return
         }
+        hideProgressBar()
+        showWeatherDetailLayout()
     }
 }
