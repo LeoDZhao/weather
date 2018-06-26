@@ -11,6 +11,7 @@ import org.mockito.MockitoAnnotations
 import org.robolectric.RobolectricTestRunner
 import retrofit2.Call
 import retrofit2.Response
+import java.io.IOException
 
 const val TEST_RESPONSE_CODE = 404
 const val TEST_RESPONSE_MESSAGE = "Not Found"
@@ -97,21 +98,21 @@ class WeatherRepositoryTest {
     }
 
     @Test
-    fun shouldHasCorrectErrorMessageInSearchDoneEventWhenResponseIsNull() {
+    fun shouldHaveCorrectErrorMessageInSearchDoneEventWhenResponseIsNull() {
         givenResponseIsNull()
         whenRequestWeatherFromAPI(TEST_LOCATION_NAME_QUERY)
         thenErrorMessageInSearchDoneEventIs(SearchDoneEvent.ErrorMessageDetail.NO_RESPONSE.toString())
     }
 
     @Test
-    fun shouldHasCorrectErrorMessageInSearchDoneEventWhenResponseIsSuccessfulButResponseBodyIsNull() {
+    fun shouldHaveCorrectErrorMessageInSearchDoneEventWhenResponseIsSuccessfulButResponseBodyIsNull() {
         givenResponseIsSuccessfulButHasNoBody()
         whenRequestWeatherFromAPI(TEST_LOCATION_NAME_QUERY)
         thenErrorMessageInSearchDoneEventIs(SearchDoneEvent.ErrorMessageDetail.NO_RESPONSE_BODY.toString())
     }
 
     @Test
-    fun shouldHasCorrectErrorMessageInSearchDoneEventWhenResponseIsNotSuccessful() {
+    fun shouldHaveCorrectErrorMessageInSearchDoneEventWhenResponseIsNotSuccessful() {
         givenResponseIsNotSuccessful()
         givenResponseHasStatusCodeAndMessage(TEST_RESPONSE_CODE, TEST_RESPONSE_MESSAGE)
         whenRequestWeatherFromAPI(TEST_LOCATION_NAME_QUERY)
@@ -122,10 +123,17 @@ class WeatherRepositoryTest {
     }
 
     @Test
-    fun shouldHasEmptyErrorMessageInSearchDoneEventWhenResponseIsSuccessfulAndHasBody() {
+    fun shouldHaveEmptyErrorMessageInSearchDoneEventWhenResponseIsSuccessfulAndHasBody() {
         givenResponseIsSuccessfulAndHasBody()
         whenRequestWeatherFromAPI(TEST_LOCATION_NAME_QUERY)
         thenErrorMessageInSearchDoneEventIs("")
+    }
+
+    @Test
+    fun shouldHaveCorrectErrorMessageInSearchDoneEventWhenNetworkIsInvalid() {
+        `when`(mockCall.execute()).thenThrow(IOException())
+        whenRequestWeatherFromAPI(TEST_LOCATION_NAME_QUERY)
+        thenErrorMessageInSearchDoneEventIs(SearchDoneEvent.ErrorMessageDetail.NETWORK_EXCEPTION.toString())
     }
 
     private fun givenResponseHasStatusCodeAndMessage(code: Int, message: String) {
