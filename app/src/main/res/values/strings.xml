@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">My Aussie Weather</string>
+    <string name="app_name">My Weather</string>
     <string name="search_hint">Enter city name or zip code</string>
     <string name="unknown">unknown</string>
     <string name="wind">Wind</string>
