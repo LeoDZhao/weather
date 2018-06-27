@@ -7,7 +7,6 @@ import android.location.LocationListener
 import android.location.LocationManager
 import android.os.Bundle
 import android.os.Handler
-import android.util.Log
 import com.ebay.dozhao.myweatherapp.event.LocationChangedEvent
 import org.greenrobot.eventbus.EventBus
 import java.math.BigDecimal
@@ -21,7 +20,6 @@ object GeoLocation : LocationListener {
     private var locationUpdated = false
 
     override fun onLocationChanged(location: Location?) {
-        Log.d("dozhao", "onLocationChanged")
         location?.let {
             latitude = BigDecimal.valueOf(it.latitude).setScale(4, RoundingMode.HALF_UP).toDouble()
             longitude = BigDecimal.valueOf(it.longitude).setScale(4, RoundingMode.HALF_UP).toDouble()
@@ -33,15 +31,12 @@ object GeoLocation : LocationListener {
     }
 
     override fun onStatusChanged(provider: String?, status: Int, extras: Bundle?) {
-        Log.d("dozhao", "onStatusChanged")
     }
 
     override fun onProviderEnabled(provider: String?) {
-        Log.d("dozhao", "onProviderEnabled")
     }
 
     override fun onProviderDisabled(provider: String?) {
-        Log.d("dozhao", "onProviderDisabled")
     }
 
     @SuppressLint("MissingPermission")

@@ -18,8 +18,8 @@ import java.util.concurrent.Executors
 
 class SearchResultActivityPresenter(private val activity: SearchResultActivity) {
 
-    private val progressBar: View = activity.findViewById(R.id.progressBar)
-    private val weatherDetailLayout: View = activity.findViewById(R.id.weather_detail_layout)
+    private val progressBar = activity.findViewById<View>(R.id.progressBar)
+    private val weatherDetailLayout = activity.findViewById<View>(R.id.weather_detail_layout)
     private val errorMessage = activity.findViewById<TextView>(R.id.error_message)
     private var currentWeather: RawCurrentWeather? = null
 
@@ -52,16 +52,12 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
         weatherDetailLayout.visibility = View.GONE
     }
 
-    private fun showErrorMessage() {
-        errorMessage.visibility = View.VISIBLE
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchDoneEvent(event: SearchDoneEvent) {
         if (event.errorMessage.isNotEmpty()) {
             hideProgressBar()
             errorMessage.text = event.errorMessage
-            showErrorMessage()
+            errorMessage.visibility = View.VISIBLE
             return
         }
 
