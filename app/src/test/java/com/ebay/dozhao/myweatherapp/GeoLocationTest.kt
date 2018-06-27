@@ -23,18 +23,17 @@ class GeoLocationTest {
     }
 
     @Test
-    fun shouldUseGpsProviderWhenGpsProviderIsEnabled() {
+    fun shouldRequestSingleUpdateByGpsProviderWhenGpsProviderIsEnable() {
         givenGpsProviderIsEnabled(true)
         whenRequestSingleLocationUpdate()
-        thenLocationManagerUseGpsProviderToRequestSingleUpdate()
+        thenGpsProviderIsUsedByeLocationManagerToRequestSingleUpdate()
     }
 
     @Test
-    fun shouldUseNetWorkProviderWhenGpsProviderIsDisabledAndNetWorkProviderIsEnable() {
-        givenGpsProviderIsEnabled(false)
+    fun shouldRequestSingleUpdateByNetWorkProviderWhenNetWorkProviderIsEnable() {
         givenNetworkProviderIsEnabled(true)
         whenRequestSingleLocationUpdate()
-        thenLocationManagerUseNetWorkProviderToRequestSingleUpdate()
+        thenNetworkProviderIsUsedByeLocationManagerToRequestSingleUpdate()
     }
 
     @Test
@@ -57,11 +56,11 @@ class GeoLocationTest {
         GeoLocation.requestSingleLocationUpdate(mockLocationManager)
     }
 
-    private fun thenLocationManagerUseGpsProviderToRequestSingleUpdate() {
+    private fun thenGpsProviderIsUsedByeLocationManagerToRequestSingleUpdate() {
         verify(mockLocationManager).requestSingleUpdate(eq(LocationManager.GPS_PROVIDER), any(), any())
     }
 
-    private fun thenLocationManagerUseNetWorkProviderToRequestSingleUpdate() {
+    private fun thenNetworkProviderIsUsedByeLocationManagerToRequestSingleUpdate() {
         verify(mockLocationManager).requestSingleUpdate(eq(LocationManager.NETWORK_PROVIDER), any(), any())
     }
 

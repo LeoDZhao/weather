@@ -33,14 +33,12 @@ object WeatherRepository {
         if (query.matches("^lat=$regexForDouble&lon=$regexForDouble$".toRegex())) {
             val pattern = Pattern.compile(regexForDouble)
             val matcher = pattern.matcher(query)
-            var lat = ""
-            var lon = ""
             if (matcher.find()) {
-                lat = matcher.group(0)
-            }
-            if (matcher.find()) {
-                lon = matcher.group(0)
-                call = weatherService.currentWeatherByLatLon(lat, lon)
+                val lat = matcher.group(0)
+                if (matcher.find()) {
+                    val lon = matcher.group(0)
+                    call = weatherService.currentWeatherByLatLon(lat, lon)
+                }
             }
         } else if (query.matches("^\\d+(?:[-\\s]\\d+)?\$".toRegex())) {
             call = weatherService.currentWeatherByZipCode(query)

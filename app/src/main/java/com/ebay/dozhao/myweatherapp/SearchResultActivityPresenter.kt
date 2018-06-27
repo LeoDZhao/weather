@@ -56,10 +56,6 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
         errorMessage.visibility = View.VISIBLE
     }
 
-    private fun hideErrorMessage() {
-        errorMessage.visibility = View.GONE
-    }
-
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onSearchDoneEvent(event: SearchDoneEvent) {
         if (event.errorMessage.isNotEmpty()) {
