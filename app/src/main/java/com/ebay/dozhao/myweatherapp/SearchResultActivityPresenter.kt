@@ -90,7 +90,7 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
             val temp = BigDecimal.valueOf(it.mainAttribute.temp - 273.15).setScale(2, RoundingMode.HALF_UP)
             temperatureTextView.text = activity.resources.getString(R.string.temperature, temp)
 
-            val simpleDateFormatSecondLevel = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.CANADA)
+            val simpleDateFormatSecondLevel = SimpleDateFormat("yyyy/MM/dd    HH:mm:ss", Locale.getDefault())
             val currentDateTime = simpleDateFormatSecondLevel.format(Date())
             val dateTextView: TextView = activity.findViewById(R.id.date)
             dateTextView.text = currentDateTime
