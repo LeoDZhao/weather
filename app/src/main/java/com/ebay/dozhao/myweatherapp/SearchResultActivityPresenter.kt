@@ -10,6 +10,8 @@ import com.ebay.dozhao.myweatherapp.event.SearchDoneEvent
 import com.ebay.dozhao.myweatherapp.raw.RawCurrentWeather
 import org.greenrobot.eventbus.Subscribe
 import org.greenrobot.eventbus.ThreadMode
+import java.math.BigDecimal
+import java.math.RoundingMode
 import java.text.SimpleDateFormat
 import java.util.*
 import java.util.concurrent.Executors
@@ -89,7 +91,8 @@ class SearchResultActivityPresenter(private val activity: SearchResultActivity) 
 
 
             val temperatureTextView: TextView = activity.findViewById(R.id.temperature)
-            temperatureTextView.text = activity.resources.getString(R.string.temperature, it.mainAttribute.temp.toString())
+            val temp = BigDecimal.valueOf(it.mainAttribute.temp - 273.15).setScale(2, RoundingMode.HALF_UP)
+            temperatureTextView.text = activity.resources.getString(R.string.temperature, temp)
 
             val simpleDateFormatSecondLevel = SimpleDateFormat("yyyy/MM/dd HH:mm:ss", Locale.CANADA)
             val currentDateTime = simpleDateFormatSecondLevel.format(Date())
