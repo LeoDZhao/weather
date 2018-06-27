@@ -46,7 +46,7 @@ class SearchActivityPresenter(private val activity: SearchActivity) : View.OnCli
 
     fun configureRecentSearchRecyclerView() {
         val viewManager = LinearLayoutManager(activity)
-        val viewAdapter = RecentSearchRecyclerViewAdapter(recentSearchRepository.recentSearches)
+        val viewAdapter = RecentSearchRecyclerViewAdapter()
         val recentSearchRecyclerView = activity.findViewById<RecyclerView>(R.id.recent_search_recycler_view)
         recentSearchRecyclerView.setHasFixedSize(true)
         recentSearchRecyclerView.layoutManager = viewManager

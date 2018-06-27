@@ -9,7 +9,7 @@ import java.util.concurrent.Executors
 object RecentSearchRepository {
     var recentSearches = ArrayList<String>()
 
-    fun updateRecentSearches() {
+    fun updateRecentSearchesFromDeviceStorage() {
         Executors.newSingleThreadExecutor().execute {
             val sharedPreferences = MyApplication.instance!!.getSharedPreferences(Constants.SAVED_RECENT_SEARCH_SHARED_PREFS,
                     Context.MODE_PRIVATE)
@@ -25,12 +25,22 @@ object RecentSearchRepository {
         if (!search.isEmpty()) {
             recentSearches.remove(search)
             recentSearches.add(0, search)
-            val searches = recentSearches.joinToString(Constants.SAVED_RECENT_SEARCH_SEPERATOR)
-            val sharedPreferences = MyApplication.instance!!.getSharedPreferences(Constants.SAVED_RECENT_SEARCH_SHARED_PREFS,
-                    Context.MODE_PRIVATE)
-            val editor = sharedPreferences.edit()
-            editor.putString(Constants.SAVED_RECENT_SEARCH_LIST, searches)
-            editor.apply()
+            writeRecentSearchesToDeviceStorage(recentSearches)
         }
+    }
+
+    fun deleteRecentSearch(search: String) {
+        recentSearches.remove(search)
+        writeRecentSearchesToDeviceStorage(recentSearches)
+
+    }
+
+    private fun writeRecentSearchesToDeviceStorage(recentSearches: ArrayList<String>) {
+        val searches = recentSearches.joinToString(Constants.SAVED_RECENT_SEARCH_SEPERATOR)
+        val sharedPreferences = MyApplication.instance!!.getSharedPreferences(Constants.SAVED_RECENT_SEARCH_SHARED_PREFS,
+                Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putString(Constants.SAVED_RECENT_SEARCH_LIST, searches)
+        editor.apply()
     }
 }

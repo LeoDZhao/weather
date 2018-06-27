@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 
-class RecentSearchRecyclerViewAdapter(private val recentSearches: ArrayList<String>)
+class RecentSearchRecyclerViewAdapter
     : RecyclerView.Adapter<RecentSearchRecyclerViewAdapter.ViewHolder>() {
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
@@ -17,11 +17,11 @@ class RecentSearchRecyclerViewAdapter(private val recentSearches: ArrayList<Stri
         return ViewHolder(view)
     }
 
-    override fun getItemCount(): Int = recentSearches.size
+    override fun getItemCount(): Int = RecentSearchRepository.recentSearches.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val textView = holder.view.findViewById<TextView>(R.id.recent_search_text)
-        textView.text = recentSearches[position]
+        textView.text = RecentSearchRepository.recentSearches[position]
 
         val textLayout = holder.view.findViewById<View>(R.id.recent_search_text_layout)
         textLayout.setOnClickListener({
@@ -33,9 +33,9 @@ class RecentSearchRecyclerViewAdapter(private val recentSearches: ArrayList<Stri
 
         val deleteIconLayout = holder.view.findViewById<View>(R.id.delete_icon_layout)
         deleteIconLayout.setOnClickListener({
-            recentSearches.removeAt(position)
+            RecentSearchRepository.deleteRecentSearch(RecentSearchRepository.recentSearches[position])
             notifyItemRemoved(position)
-            notifyItemRangeChanged(position, recentSearches.size)
+            notifyItemRangeChanged(position, RecentSearchRepository.recentSearches.size)
         })
     }
 }

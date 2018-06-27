@@ -19,6 +19,6 @@ class SplashScreenActivityPresenter(private val activity: SplashScreenActivity) 
     }
 
     fun updateRecentSearches() {
-        RecentSearchRepository.updateRecentSearches()
+        RecentSearchRepository.updateRecentSearchesFromDeviceStorage()
     }
 }
