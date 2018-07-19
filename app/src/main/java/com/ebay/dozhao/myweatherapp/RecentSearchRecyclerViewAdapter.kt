@@ -9,7 +9,12 @@ import android.widget.TextView
 class RecentSearchRecyclerViewAdapter
     : RecyclerView.Adapter<RecentSearchRecyclerViewAdapter.ViewHolder>() {
 
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+    class ViewHolder(val view: View): RecyclerView.ViewHolder(view) {
+        val textView: TextView = view.findViewById(R.id.recent_search_text)
+        val textLayout: View = view.findViewById(R.id.recent_search_text_layout)
+        val deleteIconLayout: View = view.findViewById(R.id.delete_icon_layout)
+    }
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)
@@ -20,19 +25,16 @@ class RecentSearchRecyclerViewAdapter
     override fun getItemCount(): Int = RecentSearchRepository.recentSearches.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        val textView = holder.view.findViewById<TextView>(R.id.recent_search_text)
-        textView.text = RecentSearchRepository.recentSearches[position]
+        holder.textView.text = RecentSearchRepository.recentSearches[position]
 
-        val textLayout = holder.view.findViewById<View>(R.id.recent_search_text_layout)
-        textLayout.setOnClickListener({
-            val query = it.findViewById<TextView>(R.id.recent_search_text).text.toString()
+        holder.textLayout.setOnClickListener({
+            val query = holder.textView.text.toString()
             if (query.isNotEmpty()) {
                 NavigationUtils.startSearchResultActivity(it.context, query)
             }
         })
 
-        val deleteIconLayout = holder.view.findViewById<View>(R.id.delete_icon_layout)
-        deleteIconLayout.setOnClickListener({
+        holder.deleteIconLayout.setOnClickListener({
             RecentSearchRepository.deleteRecentSearch(RecentSearchRepository.recentSearches[position])
             notifyItemRemoved(position)
             notifyItemRangeChanged(position, RecentSearchRepository.recentSearches.size)
